@@ -1,2 +1,2 @@
 all:
-	gcc main.c hashmap.c -o main
+	gcc main.c hashmap.c -o build/main
