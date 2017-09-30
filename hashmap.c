@@ -19,6 +19,10 @@ void constructor(hash_map* map, int size) {
 }
 
 int set(hash_map* map, char *key, void *value) {
+    if(map->count == map->size) {
+        return 0;
+    }
+
     int bucket_num = hash_string(map, key);
     bucket *item = map->items[bucket_num];
     bucket *next;
@@ -37,7 +41,9 @@ int set(hash_map* map, char *key, void *value) {
     } else {
         map->items[bucket_num] = next;
     }
-    return 0;
+
+    map->count++;
+    return 1;
 }
 
 void *get(hash_map* map, char *key) {
@@ -48,8 +54,63 @@ void *get(hash_map* map, char *key) {
         while(item->next && strcmp(item->key, key)) {
             item = item->next;
         }
-        return item->ptr;
-    } else {
-        return NULL;
+        if(!strcmp(item->key, key)) {
+            return item->ptr;
+        }
     }
+
+    return NULL;
+}
+
+void *delete(hash_map *map, char* key) {
+    int bucket_num = hash_string(map, key);
+    bucket *item = map->items[bucket_num];
+    bucket *prev = item;
+    bucket *new;
+    void* ret;
+
+    if(item) {
+        while(item->next && strcmp(item->key, key)) {
+            prev = item;
+            item = item->next;
+        }
+
+        if(strcmp(item->key, key)) {
+            return NULL;
+        }
+
+        new = item->next;
+        ret = item->ptr;
+
+        if(item == map->items[bucket_num]) {
+            map->items[bucket_num] = new;
+        } else {
+            prev->next = new;
+        }
+
+        free(item->key);
+        free(item);
+    }
+
+    return NULL;
+}
+
+float load(hash_map *map) {
+    return (1.0) * (map->count / map->count);
+}
+
+void free_bucket(bucket *buck) {
+    if(!buck) {
+        return;
+    }
+    free_bucket(buck->next);
+    free(buck->key);
+    free(buck);
+}
+
+void destructor(hash_map *map) {
+    for(int i = 0; i < map->size; i++) {
+        free_bucket(map->items[i]);
+    }
+    free(map);
 }

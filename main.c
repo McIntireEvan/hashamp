@@ -19,6 +19,6 @@ int main() {
     int* w1 = (int*)get(map, "a1");
     int* w2 = (int*)get(map, "a6");
     printf("%d :: %d\n", *w1, *w2);
-    free(map);
+    destructor(map);
     return 0;
 }

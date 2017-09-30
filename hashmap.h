@@ -14,6 +14,9 @@ typedef struct hash_map_t {
     bucket **items;
 } hash_map;
 
-void constructor(hash_map* map, int size);
-int set(hash_map* map, char *key, void *value);
-void *get(hash_map* map, char *key);
+void constructor(hash_map *map, int size);
+int set(hash_map *map, char *key, void *value);
+void *get(hash_map *map, char *key);
+void *delete(hash_map *map, char* key);
+float load(hash_map *map);
+void destructor(hash_map *map);
