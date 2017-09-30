@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <stdio.h>
+#include <string.h>
 
 /*  Each bucket acts as a linked list */
 typedef struct bucket_t {
@@ -14,7 +14,7 @@ typedef struct hash_map_t {
     bucket **items;
 } hash_map;
 
-void constructor(hash_map *map, int size);
+void constructor(hash_map **map, int size);
 int set(hash_map *map, char *key, void *value);
 void *get(hash_map *map, char *key);
 void *delete(hash_map *map, char* key);
