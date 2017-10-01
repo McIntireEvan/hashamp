@@ -35,7 +35,7 @@ int set(hash_map *map, char *key, void *value);
 void *get(hash_map *map, char *key);
 
 /* Deletes a key-value pair and returns the value or NULL if not in the map */
-void *delete(hash_map *map, char* key);
+void *delete(hash_map *map, char *key);
 
 /* Returns a float value representing the load factor of the hashmap*/
 float load(hash_map *map);

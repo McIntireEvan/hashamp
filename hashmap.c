@@ -1,7 +1,7 @@
 #include "hashmap.h"
 
 /* Naive string hashing function */
-int hash_string(hash_map* map, char *str) {
+int hash_string(hash_map *map, char *str) {
     unsigned long val = 0;
 
     while(*str++) {
@@ -20,7 +20,7 @@ void constructor(hash_map **map, int size) {
 }
 
 /* Adds a key-value pair to the given map, or updates the value */
-int set(hash_map* map, char *key, void *value) {
+int set(hash_map *map, char *key, void *value) {
     /* Auto-fail if we've hit the max and we're not updating */
     if(!get(map, key) && map->count == map->size) {
         return 0;
@@ -70,7 +70,7 @@ int set(hash_map* map, char *key, void *value) {
 }
 
 /* Retrieves a value given a key or NULL if not in the map*/
-void *get(hash_map* map, char *key) {
+void *get(hash_map *map, char *key) {
     /* Find the correct bucket */
     int bucket_num = hash_string(map, key);
     bucket *item = map->items[bucket_num];
@@ -89,7 +89,7 @@ void *get(hash_map* map, char *key) {
 }
 
 /* Deletes a key-value pair and returns the value or NULL if not in the map */
-void *delete(hash_map *map, char* key) {
+void *delete(hash_map *map, char *key) {
     /* Find the bucket, create some variables to keep track of our position */
     int bucket_num = hash_string(map, key);
     bucket *item = map->items[bucket_num];
